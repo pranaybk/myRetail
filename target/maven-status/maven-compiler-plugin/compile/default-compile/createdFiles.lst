@@ -1,0 +1,15 @@
+com/target/myRetail/services/ProductService.class
+com/target/myRetail/models/PriceInfo$PriceInfoBuilder.class
+com/target/myRetail/entity/ProductPrice.class
+com/target/myRetail/models/Price$PriceBuilder.class
+com/target/myRetail/controllers/ProductController$ProductControllerBuilder.class
+com/target/myRetail/MyRetailApplication.class
+com/target/myRetail/models/Price.class
+com/target/myRetail/models/JsonTemplete.class
+com/target/myRetail/models/ProductInfo$ProductInfoBuilder.class
+com/target/myRetail/models/ProductInfo.class
+com/target/myRetail/controllers/ProductController.class
+com/target/myRetail/repositories/ProductRepository.class
+com/target/myRetail/models/PriceInfo.class
+com/target/myRetail/models/JsonTemplete$JsonTempleteBuilder.class
+com/target/myRetail/entity/ProductPrice$ProductPriceBuilder.class
