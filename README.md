@@ -3,7 +3,7 @@
 ## Getting Started
 
 ### Prerequisites
-in order to myReatil API, you'll need to run MongoDB local instance. Please follow below documentation.
+in order to run myReatil API, you'll need to run MongoDB local instance. Please follow below documentation.
 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
 
 ### Run Application 
