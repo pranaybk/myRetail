@@ -8,6 +8,7 @@ import com.target.myRetail.models.Price;
 import com.target.myRetail.models.PriceInfo;
 import com.target.myRetail.models.ProductInfo;
 import com.target.myRetail.repositories.ProductRepository;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,6 @@ public class ProductService {
                 throw new InvalidPriceException("Bad Request: Unable to find Price Information ");
             }
             Price price = new Price();
-
             if (priceInfo.isPresent()) {
                 price.setValue(priceInfo.get().getPrice());
                 price.setCurrency_code(priceInfo.get().getCurrency_code());
@@ -53,11 +53,7 @@ public class ProductService {
         return productInfo;
     }
 
-    @GetMapping("/products")
-    private List<ProductPrice> getProductDetailsTemp(){
-        return productRepository.findAll();
-    }
-
+    //Add price docs in mango DB
     @PostMapping("/addProduct")
     private String saveProduct(@RequestBody ProductPrice productPrice){
         log.info("Request Schema : "+productPrice);
@@ -68,20 +64,31 @@ public class ProductService {
     @PutMapping("/products/{id}")
     private String updateProduct(@PathVariable("id") int id,@RequestBody ProductInfo productInfo){
         ProductPrice pp=new ProductPrice();
+        JSONObject jObject = new JSONObject();
         pp.setProductId(id);
         try {
+            if(productInfo==null||id!=productInfo.getId()){
+                jObject.put("ErrorCode", "410");
+                jObject.put("ErrorResponse", "ids did not match");
+                return jObject.toString();
+            }
             if(productInfo!=null&&productInfo.getCurrent_price()!=null){
                 pp.setPrice(productInfo.getCurrent_price().getValue());
                 pp.setCurrency_code(productInfo.getCurrent_price().getCurrency_code());
                 productRepository.save(pp);
             }else{
-                throw new InvalidPriceException("Bad Request:Required fields missing in the request");
+                jObject.put("ErrorCode", "411");
+                jObject.put("ErrorResponse", "Price value is empty");
+                return jObject.toString();
+
             }
 
         }catch(Exception ex){
-            log.error("Exception while updating DB : " + ex);
+            throw new InvalidPriceException("Bad Request: "+ex);
         }
 
-        return "updated product price with Id : "+pp.getProductId();
+        jObject.put("Sucess", "200");
+        jObject.put("SucessResponse", "Price value is updated for Id "+productInfo.getId());
+        return jObject.toString();
     }
 }

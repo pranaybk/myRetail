@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 @NoArgsConstructor
@@ -29,16 +31,26 @@ public class ProductController {
     @Value("${application.myRetail.excludes}")
     private String apiExcludes;
 
+
     public String getProductTitle(int id) {
         String completeURL=apiURL+id+apiExcludes;
         RestTemplate restTemplate=new RestTemplate();
-        String result=restTemplate.getForObject(completeURL,String.class);
+        Object objectTitle=new Object();
+        try {
+            //String result = restTemplate.getForObject(completeURL, String.class);
+            ResponseEntity<String> response = restTemplate.getForEntity(completeURL, String.class);
+            HttpStatus responseCode = response.getStatusCode();
+            if (!(responseCode == HttpStatus.OK)) {
+                throw new ProductNotFoundException("BAD REQUEST: Product api is down");
+            }
 
-        Object itemObjectprd = getObject(result, "product");
-        Object itemObject = getObject(itemObjectprd.toString(), "item");
-        Object itemObjectDesc = getObject(itemObject.toString(), "product_description");
-        Object objectTitle = getObject(itemObjectDesc.toString(), "title");
-
+            Object itemObjectPrd = getObject(response.getBody(), "product");
+            Object itemObject = getObject(itemObjectPrd.toString(), "item");
+            Object itemObjectDesc = getObject(itemObject.toString(), "product_description");
+            objectTitle = getObject(itemObjectDesc.toString(), "title");
+        }catch (Exception e){
+            log.error("Exception occured "+e);
+        }
         return objectTitle.toString();
     }
 

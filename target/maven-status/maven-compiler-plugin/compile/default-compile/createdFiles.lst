@@ -9,7 +9,6 @@ com/target/myRetail/models/Price.class
 com/target/myRetail/exception/InvalidPriceException.class
 com/target/myRetail/models/ProductInfo$ProductInfoBuilder.class
 com/target/myRetail/models/ProductInfo.class
-com/target/myRetail/MainTest.class
 com/target/myRetail/controllers/ProductController.class
 com/target/myRetail/repositories/ProductRepository.class
 com/target/myRetail/models/PriceInfo.class
