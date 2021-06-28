@@ -8,18 +8,27 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
 
 ### Technologies
 JDK 1.8
+
 Mango DB 4.4.5
+
 SpringBoot 2.5.1
+
 Maven
 
 ### Database Details
 
-database=products
+database=Products
+
 colleciton=PriceInfo
+
 mongodb host=localhost
+
 mongodb port=27017
+
 ### Build, Test and Run Application 
+
 mvn clean install  -Dspring.profiles.active=stage
+
 java -jar -Dspring.profiles.active=stage  target/myRetail-0.0.1-SNAPSHOT.jar
 
 ### Testing API endpoint
@@ -27,6 +36,7 @@ java -jar -Dspring.profiles.active=stage  target/myRetail-0.0.1-SNAPSHOT.jar
 ### Get 
 
 Request URL:  localhost:8081/products/13264003
+
 Response: 
 {
     "id": 13264003,
@@ -38,7 +48,9 @@ Response:
 }
 
 ### Put
+
 Request URL:  localhost:8081/products/13264003
+
 Request Body: 
 {
     "id": 13264003,
