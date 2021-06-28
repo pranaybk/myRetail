@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/")
@@ -23,7 +25,7 @@ public class ProductDetailsController {
 
     @GetMapping("products/{id}")
     private ProductInfo getProductDetails(@PathVariable("id") int id){
-        log.info("Product Id Rquested : "+id);
+        log.info("Product Id Requested : "+id);
         ProductInfo productInfo=productsService.getProductDetails(id);
         return productInfo;
     }
@@ -37,9 +39,9 @@ public class ProductDetailsController {
     }
 
     @PutMapping("products/{id}")
-    private String updateProduct(@PathVariable("id") int id,@RequestBody ProductInfo productInfo){
+    private void updateProduct(@PathVariable("id") int id,@Valid @RequestBody ProductInfo productInfo){
         log.info(" Id requested for Update: "+id);
-        String productMessage=productsService.updateProduct(id,productInfo);
-        return productMessage;
+         productsService.updateProduct(id,productInfo);
+
     }
 }

@@ -4,5 +4,5 @@ import com.target.myRetail.models.ProductInfo;
 
 public interface ProductService {
     public ProductInfo getProductDetails(int id);
-    public String updateProduct(int id, ProductInfo productInfo);
+    public void updateProduct(int id, ProductInfo productInfo);
 }
